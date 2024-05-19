@@ -6,5 +6,5 @@ def hap(num):
         i+=1
     return result
 
-targetNum = int(input('정수 입력: '))
+targetNum = int(input('정수 입력 : '))
 print(f"1부터 {targetNum}까지 합계는 {hap(targetNum)}이다.")
