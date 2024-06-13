@@ -10,16 +10,11 @@ let N, K;
 rl.on("line", (line) => {
   if (n === 0) {
     [N, K] = line.split(" ").map(Number);
+    for (let i = 0; i < N; i++) {
+      ground.push(new Array(N).fill(0));
+    }
     n++;
-  } else if (n <= N) {
-    ground.push(
-      line.split(" ").map((val) => {
-        let groundMap = [val, 0];
-        return groundMap;
-      })
-    );
-    n++;
-  } else if (n > N && n <= N + K) {
+  } else if (n <= K + 1) {
     bomb.push(line.split(" ").map(Number));
     n++;
   }
@@ -27,7 +22,6 @@ rl.on("line", (line) => {
 });
 
 rl.on("close", () => {
-  let max = 0;
   for (let i = 0; i < bomb.length; i++) {
     boom(bomb[i][0] - 1, bomb[i][1] - 1);
     boom(bomb[i][0] - 2, bomb[i][1] - 1);
@@ -35,23 +29,20 @@ rl.on("close", () => {
     boom(bomb[i][0], bomb[i][1] - 1);
     boom(bomb[i][0] - 1, bomb[i][1]);
   }
+  let result = 0;
   for (let l = 0; l < N; l++) {
-    for (let k = 0; k < N; k++) {
-      if (max < ground[l][k][1]) {
-        max = ground[l][k][1];
-      }
-    }
+    let sum = 0;
+    ground[l].forEach((elem) => {
+      sum += elem;
+    });
+    result += sum;
   }
-  console.log(max);
+  console.log(result);
 });
 
 function boom(locY, locX) {
   if (locY < N && locY >= 0 && locX < N && locX >= 0) {
-    if (ground[locY][locX][0] === "@") {
-      ground[locY][locX][1] += 2;
-    } else if (ground[locY][locX][0] === "0") {
-      ground[locY][locX][1] += 1;
-    }
+    ground[locY][locX] += 1;
   }
   return;
 }
