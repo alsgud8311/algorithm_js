@@ -1,4 +1,3 @@
-// Run by Node.js
 const readline = require("readline");
 
 let n = 0;
@@ -12,7 +11,7 @@ let stock = [];
     } else if (n <= N) {
       let [stockNum, stockPrice] = line.split(" ").map(Number);
       let value = Math.floor(stockNum * stockPrice * 10) / 10;
-      stock.push([n, value]);
+      stock.push({ index: n, value });
     }
     n++;
     if (n > N) {
@@ -20,14 +19,14 @@ let stock = [];
       rl.close();
     }
   }
-
-  process.exit();
 })();
 
 function solution() {
   stock.sort((a, b) => {
-    return b[1] - a[1] || a[0] - b[0];
+    if (b.value === a.value) {
+      return a.index - b.index;
+    }
+    return b.value - a.value;
   });
-  const result = stock.map((item) => item[0]).join(" ");
-  console.log(result);
+  console.log(stock.map((item) => item.index).join(" "));
 }
