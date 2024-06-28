@@ -40,9 +40,9 @@ function solution(friends, gifts) {
         giftLog[char].friends[char2] === giftLog[char2].friends[char]
       ) {
         if (giftLog[char].giftScore > giftLog[char2].giftScore) {
-          giftLog[char2].nextMonth++;
-        } else if (giftLog[char].giftScore < giftLog[char2].giftScore) {
           giftLog[char].nextMonth++;
+        } else if (giftLog[char].giftScore < giftLog[char2].giftScore) {
+          giftLog[char2].nextMonth++;
         }
       }
     }
